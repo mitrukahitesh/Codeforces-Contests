@@ -76,7 +76,9 @@ public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFra
             @Override
             public void onClick(View view) {
                 String url = "https://codeforces.com/problemset/problem/" + questions.get(position).getId().replace('-', '/');
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                Intent intent = new Intent(context, WebViewOfQuestion.class);
+                intent.putExtra("URL", url);
+                intent.putExtra("name", questions.get(position).getName() + " " + questions.get(position).getId());
                 context.startActivity(intent);
             }
         });

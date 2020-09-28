@@ -57,13 +57,12 @@ public class MainActivity extends AppCompatActivity {
         t2 = (TextView) findViewById(R.id.person_t);
         t3 = (TextView) findViewById(R.id.question_t);
         restoreData();
-        Thread listenerSetter = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 setImageListeners();
             }
-        });
-        listenerSetter.run();
+        }).start();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.fragment5, contestFragment).commit();
     }

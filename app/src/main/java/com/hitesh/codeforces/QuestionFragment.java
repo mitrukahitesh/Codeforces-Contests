@@ -79,8 +79,11 @@ public class QuestionFragment extends Fragment {
         } else {
             if (isInternetAvailable()) {
                 loadFreshResponse();
-            } else
-                Toast.makeText(getContext(), "No Internet", Toast.LENGTH_LONG).show();
+            } else {
+                while (getContext() == null) {
+                }
+                Toast.makeText(getContext().getApplicationContext(), "No Internet", Toast.LENGTH_LONG).show();
+            }
         }
         return view;
     }
@@ -108,14 +111,14 @@ public class QuestionFragment extends Fragment {
                     loadResponse();
                 } else {
                     if (lastResponse == null)
-                        Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext().getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (lastResponse == null)
-                    Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext().getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue queue = Volley.newRequestQueue(getContext());

@@ -157,6 +157,8 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                List<Questions> setQuestions = ((CustomAdapterFragment) recyclerView.getAdapter()).getQuestions();
+                if(lastResponse == null)
+                    return;
                 if (sorted) {
                     Collections.reverse(map.get(category));
                     loadResponse();

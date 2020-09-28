@@ -136,10 +136,10 @@ public class ContestFragment extends Fragment {
         include.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if(lastResponseString == null) {
-//                    include.setChecked(false);
-//                    return;
-//                }
+                if(lastResponseString == null) {
+                    include.setChecked(false);
+                    return;
+                }
                 if (b) {
                     loadResponse(getAllResult(getContests(lastResponseString)));
                 } else {

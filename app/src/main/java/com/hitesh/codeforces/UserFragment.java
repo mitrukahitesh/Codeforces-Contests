@@ -2,6 +2,7 @@ package com.hitesh.codeforces;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -83,6 +84,10 @@ public class UserFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!isInternetAvailable()) {
+                    Toast.makeText(getContext().getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final LoadingDialog dialog = new LoadingDialog(getContext());
                 dialog.startLoader();
                 String input = e.getText().toString();
@@ -107,9 +112,9 @@ public class UserFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismissLoader();
                         if (error.toString().endsWith("ClientError"))
-                            Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext().getApplicationContext(), "User not found", Toast.LENGTH_SHORT).show();
                         else
-                            Toast.makeText(getContext(), "Please check internet connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext().getApplicationContext(), "Please check internet connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -199,4 +204,14 @@ public class UserFragment extends Fragment {
         registeredon.setText("Registered On: " + formattedDate1);
     }
 
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm.getActiveNetworkInfo() != null) {
+            if (cm.getActiveNetworkInfo().isConnected())
+                return true;
+            else
+                return false;
+        } else
+            return false;
+    }
 }

@@ -72,26 +72,6 @@ public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFra
         thread.run();
         holder.id.setText(questions.get(position).getId());
         holder.solvedby.setText(questions.get(position).getSolvedBy() + "");
-        holder.info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://codeforces.com/problemset/problem/" + questions.get(position).getId().replace('-', '/');
-                Intent intent = new Intent(context, WebViewOfQuestion.class);
-                intent.putExtra("URL", url);
-                intent.putExtra("name", questions.get(position).getName() + " " + questions.get(position).getId());
-                context.startActivity(intent);
-            }
-        });
-        holder.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://codeforces.com/problemset/problem/" + questions.get(position).getId().replace('-', '/');
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Check this problem at Codeforces\n\n" + url);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -111,6 +91,28 @@ public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFra
             info = (ImageView) itemView.findViewById(R.id.info);
             share = (ImageView) itemView.findViewById(R.id.share);
             layout = (LinearLayout) itemView.findViewById(R.id.linearlayout);
+            info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    String url = "https://codeforces.com/problemset/problem/" + questions.get(position).getId().replace('-', '/');
+                    Intent intent = new Intent(context, WebViewOfQuestion.class);
+                    intent.putExtra("URL", url);
+                    intent.putExtra("name", questions.get(position).getName() + " " + questions.get(position).getId());
+                    context.startActivity(intent);
+                }
+            });
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    String url = "https://codeforces.com/problemset/problem/" + questions.get(position).getId().replace('-', '/');
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Check this problem at Codeforces\n\n" + url);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

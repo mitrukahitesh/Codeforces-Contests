@@ -77,45 +77,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomVH> 
         sdf.setTimeZone(zone);
         String formattedDate = sdf.format(date);
         holder.start.setText("Start: " + formattedDate);
-        holder.info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "https://www.codeforces.com/contests/" + results.get(position).getId();
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                context.startActivity(intent);
-            }
-        });
-        holder.notify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
-                intent.putExtra(CalendarContract.Events.TITLE, results.get(position).getName());
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, (long) results.get(position).getStartTimeSeconds() * 1000);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, (long) results.get(position).getStartTimeSeconds() * 1000
-                        + results.get(position).getDurationSeconds() * 1000);
-                intent.putExtra(CalendarContract.Events.HAS_ALARM, true);
-                int permission_read = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR);
-                int permission_write = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR);
-                if (permission_read == PackageManager.PERMISSION_DENIED)
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR}, 0);
-                if (permission_write == PackageManager.PERMISSION_DENIED)
-                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
-                if (intent.resolveActivity(context.getPackageManager()) != null)
-                    context.startActivity(intent);
-                else
-                    Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Check this upcoming CodeForces contest\n\n" +
-                        "https://www.codeforces.com/contests/" + results.get(position).getId());
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -137,6 +98,48 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomVH> 
             info = (ImageView) itemView.findViewById(R.id.info);
             notify = (ImageView) itemView.findViewById(R.id.notify);
             share = (ImageView) itemView.findViewById(R.id.share);
+            info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    String url = "https://www.codeforces.com/contests/" + results.get(position).getId();
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    context.startActivity(intent);
+                }
+            });
+            notify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Intent intent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
+                    intent.putExtra(CalendarContract.Events.TITLE, results.get(position).getName());
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, (long) results.get(position).getStartTimeSeconds() * 1000);
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, (long) results.get(position).getStartTimeSeconds() * 1000
+                            + results.get(position).getDurationSeconds() * 1000);
+                    intent.putExtra(CalendarContract.Events.HAS_ALARM, true);
+                    int permission_read = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR);
+                    int permission_write = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR);
+                    if (permission_read == PackageManager.PERMISSION_DENIED)
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR}, 0);
+                    if (permission_write == PackageManager.PERMISSION_DENIED)
+                        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
+                    if (intent.resolveActivity(context.getPackageManager()) != null)
+                        context.startActivity(intent);
+                    else
+                        Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show();
+                }
+            });
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Check this upcoming CodeForces contest\n\n" +
+                            "https://www.codeforces.com/contests/" + results.get(position).getId());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

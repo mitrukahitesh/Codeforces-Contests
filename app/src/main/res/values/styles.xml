@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="title">Code Forces</item>
         <item name="android:letterSpacing">0.08</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@string/font</item>
     </style>
 
     <style name="splashscreen" parent="Theme.AppCompat.Light.NoActionBar">

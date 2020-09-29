@@ -85,7 +85,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!isInternetAvailable()) {
-                    Toast.makeText(getContext().getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final LoadingDialog dialog = new LoadingDialog(getContext());
@@ -112,9 +112,9 @@ public class UserFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismissLoader();
                         if (error.toString().endsWith("ClientError"))
-                            Toast.makeText(getContext().getApplicationContext(), "User not found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
                         else
-                            Toast.makeText(getContext().getApplicationContext(), "Please check internet connection", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Please check internet connection", Toast.LENGTH_SHORT).show();
                     }
                 });
                 RequestQueue queue = Volley.newRequestQueue(getContext());

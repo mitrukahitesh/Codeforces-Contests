@@ -125,8 +125,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomVH> 
                         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_CALENDAR}, 1);
                     if (intent.resolveActivity(context.getPackageManager()) != null)
                         context.startActivity(intent);
-                    else
-                        Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show();
                 }
             });
             share.setOnClickListener(new View.OnClickListener() {

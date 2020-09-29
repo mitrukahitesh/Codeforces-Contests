@@ -29,14 +29,14 @@ public class MenuActivity extends AppCompatActivity {
         t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuActivity.this, "Coming Soon!!!", Toast.LENGTH_SHORT).show();
             }
         });
 
         t2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming Soon!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuActivity.this, "Coming Soon!!!", Toast.LENGTH_SHORT).show();
             }
         });
 

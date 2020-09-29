@@ -1,7 +1,11 @@
 package com.hitesh.codeforces;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,6 +43,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     ImageView i1, i2, i3;
     TextView t1, t2, t3;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
     ArrayList<Result> results;
     ContestFragment contestFragment;
     UserFragment userFragment;
@@ -56,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         t1 = (TextView) findViewById(R.id.contest_t);
         t2 = (TextView) findViewById(R.id.person_t);
         t3 = (TextView) findViewById(R.id.question_t);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setUpNavigationDrawer();
         restoreData();
         new Thread(new Runnable() {
             @Override
@@ -65,6 +78,62 @@ public class MainActivity extends AppCompatActivity {
         }).start();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.fragment5, contestFragment).commit();
+    }
+
+    private void setUpNavigationDrawer() {
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_open, R.string.navigation_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                switch (item.getItemId()) {
+                    case R.id.reminder:
+                        getReminders();
+                        break;
+                    case R.id.share:
+                        shareApp();
+                        break;
+                    case R.id.rate:
+                        rateUs();
+                        break;
+                    case R.id.developer:
+                        contactMe();
+                        break;
+                    case R.id.report:
+                        reportBug();
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void getReminders() {
+        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void shareApp() {
+        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void rateUs() {
+        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void contactMe() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.github.com/mitrukahitesh"));
+        startActivity(intent);
+    }
+
+    private void reportBug() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"hitesh9031@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "BUG: Codeforces Contests");
+        startActivity(intent);
     }
 
     public void setImageListeners() {
@@ -110,20 +179,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.custom_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-        return true;
-    }
-
-    @Override
     protected void onStop() {
         String s1 = contestFragment.getLastResponse();
         String s2 = userFragment.getLastResponse();
@@ -142,5 +197,14 @@ public class MainActivity extends AppCompatActivity {
         contestFragment = new ContestFragment(sharedPreferences.getString(CONTEST, null));
         userFragment = new UserFragment(sharedPreferences.getString(USER, null));
         questionFragment = new QuestionFragment(sharedPreferences.getString(QUESTION, null));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

@@ -10,8 +10,10 @@
         <item name="android:fontFamily">@string/font</item>
     </style>
 
-    <style name="splashscreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">#FFFFFF</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="statusBarBackground">@android:color/transparent</item>
     </style>
 
 </resources>

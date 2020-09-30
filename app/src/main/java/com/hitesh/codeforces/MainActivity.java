@@ -6,43 +6,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.res.loader.ResourcesLoader;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.hitesh.codeforces.contest.Result;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView i1, i2, i3;
-    TextView t1, t2, t3;
+    FragmentManager manager;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -54,28 +42,19 @@ public class MainActivity extends AppCompatActivity {
     public final static String CONTEST = "contest";
     public final static String USER = "user";
     public final static String QUESTION = "question";
+    public static final String DOWNLOAD_LINK = "https://mitrukahitesh.github.io/apkdownload/Codeforces%20Contest.apk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        i1 = (ImageView) findViewById(R.id.contest);
-        i2 = (ImageView) findViewById(R.id.person);
-        i3 = (ImageView) findViewById(R.id.question);
-        t1 = (TextView) findViewById(R.id.contest_t);
-        t2 = (TextView) findViewById(R.id.person_t);
-        t3 = (TextView) findViewById(R.id.question_t);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        manager = getSupportFragmentManager();
         setUpNavigationDrawer();
+        navigationView.setCheckedItem(R.id.contests);
         restoreData();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setImageListeners();
-            }
-        }).start();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.fragment5, contestFragment).commit();
     }
@@ -90,8 +69,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 switch (item.getItemId()) {
-                    case R.id.reminder:
-                        getReminders();
+                    case R.id.contests:
+                        manager.beginTransaction().addToBackStack(null).replace(R.id.fragment5, contestFragment).commit();
+                        break;
+                    case R.id.questions:
+                        manager.beginTransaction().addToBackStack(null).replace(R.id.fragment5, questionFragment).commit();
+                        break;
+                    case R.id.user:
+                        manager.beginTransaction().addToBackStack(null).replace(R.id.fragment5, userFragment).commit();
                         break;
                     case R.id.share:
                         shareApp();
@@ -111,12 +96,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getReminders() {
-        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
-    }
-
     private void shareApp() {
-        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "Download the Codeforces Contest app from the link below:\n\n" + DOWNLOAD_LINK);
+        startActivity(Intent.createChooser(intent, "Share"));
     }
 
     private void rateUs() {
@@ -125,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void contactMe() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.github.com/mitrukahitesh"));
-        startActivity(intent);
+        startActivity(Intent.createChooser(intent, "Select Browser"));
     }
 
     private void reportBug() {
@@ -133,49 +117,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"hitesh9031@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "BUG: Codeforces Contests");
-        startActivity(intent);
-    }
-
-    public void setImageListeners() {
-        i1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                i1.setImageResource(R.drawable.contest_red);
-                t1.setVisibility(View.VISIBLE);
-                i2.setImageResource(R.drawable.person);
-                i3.setImageResource(R.drawable.question);
-                t2.setVisibility(View.GONE);
-                t3.setVisibility(View.GONE);
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.fragment5, contestFragment).commit();
-            }
-        });
-        i2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                i1.setImageResource(R.drawable.contest);
-                i2.setImageResource(R.drawable.person_red);
-                t2.setVisibility(View.VISIBLE);
-                t3.setVisibility(View.GONE);
-                t1.setVisibility(View.GONE);
-                i3.setImageResource(R.drawable.question);
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.fragment5, userFragment).commit();
-            }
-        });
-        i3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                i1.setImageResource(R.drawable.contest);
-                i2.setImageResource(R.drawable.person);
-                i3.setImageResource(R.drawable.question_red);
-                t3.setVisibility(View.VISIBLE);
-                t1.setVisibility(View.GONE);
-                t2.setVisibility(View.GONE);
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.fragment5, questionFragment).commit();
-            }
-        });
+        startActivity(Intent.createChooser(intent, "Select email app"));
     }
 
     @Override
@@ -205,6 +147,23 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            if(contestFragment != null) {
+                if(contestFragment.isVisible()) {
+                    navigationView.setCheckedItem(R.id.contests);
+                    return;
+                }
+            }
+            if(questionFragment != null) {
+                if(questionFragment.isVisible()) {
+                    navigationView.setCheckedItem(R.id.questions);
+                    return;
+                }
+            }
+            if(userFragment != null) {
+                if(userFragment.isVisible()) {
+                    navigationView.setCheckedItem(R.id.user);
+                }
+            }
         }
     }
 }

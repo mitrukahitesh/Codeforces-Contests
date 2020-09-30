@@ -22,6 +22,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hitesh.codeforces.contest.Contests;
+import com.hitesh.codeforces.contest.Result;
 
 import java.util.ArrayList;
 
@@ -69,7 +71,7 @@ public class ContestFragment extends Fragment {
     }
 
     public void loadResponse(ArrayList<Result> response) {
-        CustomAdapter adapter = new CustomAdapter(getContext(), response);
+        ContestAdapter adapter = new ContestAdapter(getContext(), response);
         recycler.setAdapter(adapter);
     }
 

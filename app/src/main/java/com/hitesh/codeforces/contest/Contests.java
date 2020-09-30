@@ -1,5 +1,5 @@
 
-package com.hitesh.codeforces;
+package com.hitesh.codeforces.contest;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

@@ -2,7 +2,6 @@ package com.hitesh.codeforces;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
@@ -11,12 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -89,7 +85,7 @@ public class QuestionFragment extends Fragment {
     }
 
     public void loadResponse() {
-        CustomAdapterFragment adapterFragment = new CustomAdapterFragment(getContext(), map.get(category));
+        QuestionAdapter adapterFragment = new QuestionAdapter(getContext(), map.get(category));
         recyclerView.setAdapter(adapterFragment);
     }
 
@@ -179,7 +175,7 @@ public class QuestionFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 sorted = false;
-                                CustomAdapterFragment adapterFragment = new CustomAdapterFragment(getContext(), map.get(category = categories.get(i)));
+                                QuestionAdapter adapterFragment = new QuestionAdapter(getContext(), map.get(category = categories.get(i)));
                                 recyclerView.setAdapter(adapterFragment);
                             }
                         });

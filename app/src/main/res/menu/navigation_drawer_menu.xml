@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/reminder"
-        android:icon="@drawable/added_alarms"
-        android:title="Reminders" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/contests"
+            android:icon="@drawable/contest"
+            android:title="Contests" />
+        <item
+            android:id="@+id/questions"
+            android:icon="@drawable/question"
+            android:title="Problem Set" />
+        <item
+            android:id="@+id/user"
+            android:icon="@drawable/person"
+            android:title="User" />
+    </group>
 
-    <item
-        android:id="@+id/share"
-        android:icon="@drawable/share_app"
-        android:title="Share" />
-
-    <item
-        android:id="@+id/rate"
-        android:icon="@drawable/ic_baseline_rate_review_24"
-        android:title="Rate Us" />
+    <item android:title="Share">
+        <menu>
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/share_app"
+            android:title="Share" />
+        </menu>
+    </item>
 
     <item android:title="Feedback">
         <menu>
             <item
+                android:id="@+id/rate"
+                android:icon="@drawable/ic_baseline_rate_review_24"
+                android:title="Rate Us" />
+            <item
                 android:id="@+id/developer"
                 android:icon="@drawable/ic_baseline_developer_mode_24"
-                android:title="Developer" />
+                android:title="Contact Developer" />
             <item
                 android:id="@+id/report"
                 android:icon="@drawable/bug_report"

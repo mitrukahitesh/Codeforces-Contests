@@ -54,9 +54,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_weight="1"
                     android:text="Duration"
                     android:textColor="@color/white"
-                    android:layout_weight="1"
                     android:textSize="15sp" />
 
                 <TextView
@@ -64,12 +64,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_weight="1"
                     android:text="ONGOING"
                     android:textColor="@color/colorPrimaryDark"
                     android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-                    android:layout_weight="1"
                     android:textSize="18sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingRight="20dp"
-                    android:src="@drawable/calendar" />
+                    android:src="@drawable/ic_baseline_add_alarm_24" />
 
                 <ImageView
                     android:id="@+id/info"

@@ -4,31 +4,26 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hitesh.codeforces.problemset.Problem;
 import com.hitesh.codeforces.problemset.Questions;
-import com.hitesh.codeforces.problemset.Response;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFragment.CustomVHFragment> {
+public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.CustomVHFragment> {
 
     Context context;
     List<Questions> questions;
 
-    public CustomAdapterFragment(Context context, List<Questions> questions) {
+    public QuestionAdapter(Context context, List<Questions> questions) {
         this.context = context;
         this.questions = questions;
     }
@@ -41,7 +36,7 @@ public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFra
     @Override
     public CustomVHFragment onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.question_layout, parent, false);
+        View view = inflater.inflate(R.layout.question_holder, parent, false);
         return new CustomVHFragment(view);
     }
 
@@ -110,7 +105,7 @@ public class CustomAdapterFragment extends RecyclerView.Adapter<CustomAdapterFra
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_TEXT, "Check this problem at Codeforces\n\n" + url);
-                    context.startActivity(intent);
+                    context.startActivity(Intent.createChooser(intent, "Share"));
                 }
             });
         }

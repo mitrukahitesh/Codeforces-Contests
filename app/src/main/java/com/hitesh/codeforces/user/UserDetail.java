@@ -1,4 +1,4 @@
-package com.hitesh.codeforces;
+package com.hitesh.codeforces.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

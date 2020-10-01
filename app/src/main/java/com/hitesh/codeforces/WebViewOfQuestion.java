@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
+import android.print.PrintDocumentInfo;
 import android.print.PrintJob;
 import android.print.PrintManager;
 import android.view.View;
@@ -14,10 +15,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class WebViewOfQuestion extends AppCompatActivity {
     private WebView web;
     private Button save;
-    private View webView;
     private Intent intent;
 
     @Override
@@ -36,12 +38,12 @@ public class WebViewOfQuestion extends AppCompatActivity {
                 startPrintProcess();
             }
         });
+
         web.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 dialog.dismissLoader();
                 save.setVisibility(View.VISIBLE);
-                webView = view;
             }
         });
         web.getSettings().setJavaScriptEnabled(true);

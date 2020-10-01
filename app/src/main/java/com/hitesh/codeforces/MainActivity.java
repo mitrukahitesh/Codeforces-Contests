@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String CONTEST = "contest";
     public final static String USER = "user";
     public final static String QUESTION = "question";
-    public static final String DOWNLOAD_LINK = "https://mitrukahitesh.github.io/apkdownload/Codeforces%20Contest.apk";
+    public static final String DOWNLOAD_LINK = "https://mitrukahitesh.github.io/apkdownload";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

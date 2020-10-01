@@ -30,9 +30,9 @@
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
                 android:text="Code Forces"
-                android:textColor="#9C9191"
-                android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-                android:textSize="20sp"
+                android:textColor="#336699"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -41,8 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="Start"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp" />
+                android:textColor="#918383"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,8 +57,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="Duration"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textColor="#918383"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/ongoing"
@@ -86,8 +88,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="CF"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15sp" />
+                    android:textColor="#918383"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/notify"
@@ -110,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:paddingRight="20dp"
+                    android:paddingRight="10dp"
                     android:src="@drawable/ic_baseline_share_24" />
 
             </LinearLayout>

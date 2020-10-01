@@ -28,10 +28,6 @@
     <item android:title="Feedback">
         <menu>
             <item
-                android:id="@+id/rate"
-                android:icon="@drawable/ic_baseline_rate_review_24"
-                android:title="Rate Us" />
-            <item
                 android:id="@+id/developer"
                 android:icon="@drawable/ic_baseline_developer_mode_24"
                 android:title="Contact Developer" />

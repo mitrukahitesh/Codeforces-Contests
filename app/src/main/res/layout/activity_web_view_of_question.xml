@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/customshape"
-        android:text="Save as PDF"
+        android:text="Print"
         android:textColor="#9C9191"
         android:textSize="18sp"
         android:visibility="gone" />

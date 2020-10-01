@@ -81,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.share:
                         shareApp();
                         break;
-                    case R.id.rate:
-                        rateUs();
-                        break;
                     case R.id.developer:
                         contactMe();
                         break;
@@ -101,10 +98,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, "Download the Codeforces Contest app from the link below:\n\n" + DOWNLOAD_LINK);
         startActivity(Intent.createChooser(intent, "Share"));
-    }
-
-    private void rateUs() {
-        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
     }
 
     private void contactMe() {

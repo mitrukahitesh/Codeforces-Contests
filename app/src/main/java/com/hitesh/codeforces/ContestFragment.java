@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +111,10 @@ public class ContestFragment extends Fragment {
         StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if(!response.substring(1, 6).equals("status")) {
+                    Toast.makeText(getContext(), "Server under maintenance", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Contests contests = getContests(response);
                 if (contests.getStatus().equals("OK")) {
                     lastResponseString = response;

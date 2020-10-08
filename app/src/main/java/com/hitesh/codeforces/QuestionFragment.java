@@ -99,6 +99,10 @@ public class QuestionFragment extends Fragment {
         StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if(!response.substring(1, 6).equals("status")) {
+                    Toast.makeText(getContext(), "Server under maintenance", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 com.hitesh.codeforces.problemset.Response freshResponse = getResponse(response);
                 if (freshResponse.getStatus().equals("OK")) {
                     lastResponse = response;

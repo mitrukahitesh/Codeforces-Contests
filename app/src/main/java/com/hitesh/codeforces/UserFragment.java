@@ -93,6 +93,11 @@ public class UserFragment extends Fragment {
                 StringRequest request = new StringRequest(URL + input, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        if(!response.substring(1, 6).equals("status")) {
+                            Toast.makeText(getContext(), "Server under maintenance", Toast.LENGTH_SHORT).show();
+                            dialog.dismissLoader();
+                            return;
+                        }
                         GsonBuilder builder = new GsonBuilder();
                         Gson gson = builder.create();
                         SearchedUser user = gson.fromJson(response, SearchedUser.class);
